@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite start="1623069419521" stop="1623069425339" version="1.5.4" xmlns:ns2="urn:model.allure.qatools.yandex.ru">
+    <name>Default Suite : WebShop</name>
+    <title>Default Suite : WebShop</title>
+    <test-cases>
+        <test-case start="1623069422411" stop="1623069425336" status="passed">
+            <name>buyProduct</name>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="testSuite" value="Default Suite"/>
+                <label name="testGroup" value="WebShop"/>
+                <label name="testClass" value="tests.Test_Package1"/>
+                <label name="testMethod" value="buyProduct"/>
+                <label name="host" value="HHPP593"/>
+                <label name="thread" value="6100@HHPP593.main(1)"/>
+            </labels>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="framework" value="TestNG"/>
+        <label name="language" value="JAVA"/>
+    </labels>
+</ns2:test-suite>

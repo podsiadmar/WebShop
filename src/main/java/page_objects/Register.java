@@ -25,10 +25,12 @@ public class Register extends Base{
     private WebElement registerButton;
     @FindBy(xpath = "//div[@class='result']")
     private WebElement registerNotification;
+    @FindBy(xpath = "//a[@class='account'][contains(text(), '@')]")
+    public WebElement accountLink;
 
     public Register(WebDriver driver) {super(driver);}
 
-    public void registerNewUser(String gender, String firsName, String lastName, String eMail, String password, String confirmPassword){
+    public Register registerNewUser(String gender, String firsName, String lastName, String eMail, String password, String confirmPassword){
         Assert.assertTrue(firstNameTextBox.isDisplayed());
 
         if (gender=="M"){
@@ -47,11 +49,15 @@ public class Register extends Base{
         passwordTextBox.sendKeys(password);
         confirmPasswordTextBox.sendKeys(confirmPassword);
         registerButton.click();
+        return this;
 
     }
 
-    public void verifyRegistrationCompletion(){
+    public Register verifyRegistrationCompletion(String newEmail){
         String notificationText = registerNotification.getText().trim();
         Assert.assertEquals(notificationText, "Your registration completed");
+        String accountLinkText =    accountLink.getText().trim();
+        Assert.assertEquals(accountLinkText, newEmail);
+        return this;
     }
 }

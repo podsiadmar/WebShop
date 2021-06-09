@@ -27,4 +27,6 @@ public class LogIn extends Base {
         driver.findElement(By.linkText("Log out")).isDisplayed();
     }
 
+
+
 }
