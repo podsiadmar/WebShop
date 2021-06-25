@@ -99,5 +99,11 @@ public class Test_Package1 extends BaseTest {
                 .logOut();
     }
 
+    @Test
+    public void dataTest() throws SQLException {
+        database
+                .ConnectToDatabase();
+    }
+
 }
 
