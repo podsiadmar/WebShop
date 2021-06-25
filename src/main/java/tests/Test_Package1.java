@@ -2,6 +2,9 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import page_objects.Database;
+
+import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -96,5 +99,5 @@ public class Test_Package1 extends BaseTest {
                 .logOut();
     }
 
-
 }
+
