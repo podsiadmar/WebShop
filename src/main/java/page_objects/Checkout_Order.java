@@ -190,6 +190,7 @@ public class Checkout_Order extends Base{
         String totalPrice = driver.findElement(By.xpath("//span[@class='product-price order-total']/strong")).getText();
         Double orderTotalPrice = Double.valueOf(totalPrice);
         return orderTotalPrice;
+        
     }
 
 
