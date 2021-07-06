@@ -33,6 +33,8 @@ public class Test_Cases extends BaseTest {
         register
                 .registerNewUser("M", fName, lName, nMail, "Pass1234!", "Pass1234!")
                 .verifyRegistrationCompletion(nMail);
+        homePage
+                .logOut();
     }
 
     @Test
@@ -55,6 +57,8 @@ public class Test_Cases extends BaseTest {
                 .verifySubTotalPrice()
                 .removeFirstProduct()
                 .verifyShoppingCartIsEmpty();
+        homePage
+                .logOut();
 
     }
 
