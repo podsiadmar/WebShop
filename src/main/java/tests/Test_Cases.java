@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Test_Package1 extends BaseTest {
+public class Test_Cases extends BaseTest {
 
     @Test
     public void loginToShop(){
@@ -92,7 +92,7 @@ public class Test_Package1 extends BaseTest {
                 .pressContinuePaymentInformation();
         double orderSubTotalPrice = checkout_order.getOrderSubTotalPrice();
         double orderTotalPrice = checkout_order.getOrderTotalPrice();
-        Assert.assertTrue(shippingMethodPrice + paymentMethodPrice + orderSubTotalPrice == orderTotalPrice);
+        Assert.assertEquals(orderTotalPrice, shippingMethodPrice + paymentMethodPrice + orderSubTotalPrice);
         checkout_order
                 .pressConfirm();
         homePage

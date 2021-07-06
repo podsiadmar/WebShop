@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
-
 import java.util.List;
 
 public class Checkout_Order extends Base{
@@ -75,9 +74,10 @@ public class Checkout_Order extends Base{
         return this;
     }
 
-    //doesnt work on webshop, tried to put all buttons into one array then click the enable one
+    //doesn't work on webshop, tried to put all buttons into one array then click the enable one
     public Checkout_Order pressContinue() throws InterruptedException {
-        WebElement btns[] = new WebElement[] {continueButtonBilling, continueButtonShipping,continueButtonPaymentInformation, continueButtonPaymentMethod, continueButtonShippingMethod};
+        WebElement[] btns = new WebElement[] {continueButtonBilling, continueButtonShipping
+                ,continueButtonPaymentInformation, continueButtonPaymentMethod, continueButtonShippingMethod};
         for(WebElement btn : btns){
             if (btn.isEnabled()){
                 Thread.sleep(1000);
@@ -173,24 +173,20 @@ public class Checkout_Order extends Base{
 
     public double getMethodPrice(String methodForPrice){
         String label = driver.findElement(By.xpath("//label[contains(text(), '"+methodForPrice+"')]")).getText();
-        Integer leftBracket = label.indexOf("(");
-        Integer rightBracket = label.indexOf(")");
+        int leftBracket = label.indexOf("(");
+        int rightBracket = label.indexOf(")");
         String priceTrimmed = label.substring(leftBracket+1, rightBracket);
-        Double paymentMethodPrice = Double.valueOf(priceTrimmed);
-        return paymentMethodPrice;
+        return Double.parseDouble(priceTrimmed);
     }
 
     public double getOrderSubTotalPrice(){
         String subTotal = driver.findElement(By.xpath("//span[text()='Sub-Total:']/ancestor::td/following-sibling::td//span[@class='product-price']")).getText();
-        Double orderSubTotalPrice = Double.valueOf(subTotal);
-        return orderSubTotalPrice;
+        return Double.parseDouble(subTotal);
     }
 
     public double getOrderTotalPrice(){
         String totalPrice = driver.findElement(By.xpath("//span[@class='product-price order-total']/strong")).getText();
-        Double orderTotalPrice = Double.valueOf(totalPrice);
-        return orderTotalPrice;
-        
+        return Double.parseDouble(totalPrice);
     }
 
 
