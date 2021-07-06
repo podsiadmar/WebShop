@@ -19,7 +19,6 @@ public class BaseTest {
     protected Products products;
     protected Shopping_Cart shopping_cart;
     protected Checkout_Order checkout_order;
-    protected Database database;
 
     @BeforeMethod
     public void setUp(){
@@ -46,7 +45,6 @@ public class BaseTest {
         products = new Products(driver);
         shopping_cart = new Shopping_Cart(driver);
         checkout_order = new Checkout_Order(driver);
-        database = new Database(driver);
     }
 
     @AfterMethod
