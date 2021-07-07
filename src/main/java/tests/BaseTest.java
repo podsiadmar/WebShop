@@ -1,6 +1,7 @@
 package tests;
 
 import com.github.javafaker.Faker;
+import configuration.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -33,6 +34,6 @@ public class BaseTest {
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+        WebDriverProvider.closeDriver();
     }
 }

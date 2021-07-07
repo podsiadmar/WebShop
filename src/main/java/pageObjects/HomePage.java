@@ -1,6 +1,5 @@
 package pageObjects;
 
-import jdk.jpackage.internal.Log;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

@@ -47,9 +47,9 @@ public class CheckoutOrder extends Base{
     private WebElement continueButtonShippingMethod;
     @FindBy(xpath = "//input[@type='button' and @value='Continue'][@onclick='PaymentMethod.save()']")
     private WebElement continueButtonPaymentMethod;
-    @FindBy(xpath = "//input[@type='button' and @value='Continue'][@onclick='PaymentInfo.save()']")
+    @FindBy(xpath = "[@onclick='PaymentInfo.save()']")
     private WebElement continueButtonPaymentInformation;
-    @FindBy(xpath = "//input[@value='Confirm']")
+    @FindBy(css = "[value='Confirm']")
     private WebElement confirmButton;
 
     //Order Completed
