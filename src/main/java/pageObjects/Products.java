@@ -29,7 +29,10 @@ public class Products extends Base {
                     .stream()
                     .filter(element -> element.getText().contains(productName))
                     .collect(Collectors.toList());
-             if(lookedUpProduct.isEmpty() && nextButton.isDisplayed()) nextButton.click();
+             if(lookedUpProduct.isEmpty() && nextButton.isDisplayed())
+                 nextButton.click();
+             if(lookedUpProduct.isEmpty() && !nextButton.isDisplayed())
+                 throw new InvalidArgumentException("There is n such product in catalog.");
         } while (lookedUpProduct.isEmpty());
 
         lookedUpProduct.get(0).click();
