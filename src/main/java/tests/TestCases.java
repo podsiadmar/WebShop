@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Test_Cases extends BaseTest {
+public class TestCases extends BaseTest {
 
     @Test
     public void loginToShop(){
@@ -38,7 +38,7 @@ public class Test_Cases extends BaseTest {
     }
 
     @Test
-    public void verifyProductPrice() throws InterruptedException {
+    public void verifyProductPrice() {
         homePage
                 .proceedToLogin();
         logInLogout
@@ -63,7 +63,7 @@ public class Test_Cases extends BaseTest {
     }
 
     @Test
-    public void checkoutProcess() throws InterruptedException {
+    public void checkoutProcess() {
         homePage
                 .proceedToLogin();
         logInLogout

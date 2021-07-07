@@ -1,6 +1,6 @@
-package page_objects;
+package pageObjects;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
@@ -23,24 +23,21 @@ public class Register extends Base{
     private WebElement confirmPasswordTextBox;
     @FindBy(id = "register-button")
     private WebElement registerButton;
-    @FindBy(xpath = "//div[@class='result']")
+    @FindBy(className = "result")
     private WebElement registerNotification;
-    @FindBy(xpath = "//a[@class='account'][contains(text(), '@')]")
+    @FindBy(className = "account")
     public WebElement accountLink;
 
-    public Register(WebDriver driver) {super(driver);}
-
     public Register registerNewUser(String gender, String firsName, String lastName, String eMail, String password, String confirmPassword){
-        Assert.assertTrue(firstNameTextBox.isDisplayed());
-
-        if (gender=="M"){
-            maleRadioButton.click();
-        }
-        else if (gender=="F"){
-            femaleRadioButton.click();
-        }
-        else {
-            System.out.println("incorect data");
+        switch (gender){
+            case "M":
+                maleRadioButton.click();
+                break;
+            case "F":
+                femaleRadioButton.click();
+                break;
+            default:
+                throw new InvalidArgumentException("Gender field value is invalid.");
         }
 
         firstNameTextBox.sendKeys(firsName);
@@ -50,14 +47,11 @@ public class Register extends Base{
         confirmPasswordTextBox.sendKeys(confirmPassword);
         registerButton.click();
         return this;
-
     }
 
     public Register verifyRegistrationCompletion(String newEmail){
-        String notificationText = registerNotification.getText().trim();
-        Assert.assertEquals(notificationText, "Your registration completed");
-        String accountLinkText =    accountLink.getText().trim();
-        Assert.assertEquals(accountLinkText, newEmail);
+        Assert.assertEquals(registerNotification.getText().trim(), "Your registration completed");
+        Assert.assertEquals(accountLink.getText().trim(), newEmail);
         return this;
     }
 }

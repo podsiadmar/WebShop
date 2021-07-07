@@ -1,14 +1,12 @@
-package page_objects;
+package pageObjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.testng.Assert;
+
 import java.util.List;
 
-public class Checkout_Order extends Base{
-    public Checkout_Order(WebDriver driver) {super(driver);}
+public class CheckoutOrder extends Base{
 
     //Billing address
     @FindBy(id = "BillingNewAddress_CountryId")
@@ -63,10 +61,9 @@ public class Checkout_Order extends Base{
     @FindBy(xpath = "//input[@type='button' and @title='Continue' or @value='Continue' and contains(@onclick, '.save')]")
     private List<WebElement> continueBtns;
 
-    public Checkout_Order clickContinue() throws InterruptedException {
+    public CheckoutOrder clickContinue() {
         for (WebElement btn : continueBtns){
             if(btn.isEnabled()){
-                Thread.sleep(1000);
                 btn.click();
                 break;
             }
@@ -75,12 +72,12 @@ public class Checkout_Order extends Base{
     }
 
     //doesn't work on webshop, tried to put all buttons into one array then click the enable one
-    public Checkout_Order pressContinue() throws InterruptedException {
-        WebElement[] btns = new WebElement[] {continueButtonBilling, continueButtonShipping
-                ,continueButtonPaymentInformation, continueButtonPaymentMethod, continueButtonShippingMethod};
+    public CheckoutOrder pressContinue() {
+        WebElement[] btns = new WebElement[] { continueButtonBilling, continueButtonShipping,
+                continueButtonPaymentInformation, continueButtonPaymentMethod, continueButtonShippingMethod
+        };
         for(WebElement btn : btns){
             if (btn.isEnabled()){
-                Thread.sleep(1000);
                 btn.click();
                 break;
             }
@@ -88,82 +85,63 @@ public class Checkout_Order extends Base{
         return this;
     }
 
-    public Checkout_Order pressContinueBillingAddress() throws InterruptedException {
-        Thread.sleep(1000);
-        Assert.assertTrue(continueButtonBilling.isDisplayed());
+    public CheckoutOrder pressContinueBillingAddress() {
         continueButtonBilling.click();
-    return this;
+        return this;
     }
 
-    public Checkout_Order pressContinueShippingAddress() throws InterruptedException {
-        Thread.sleep(1000);
-        Assert.assertTrue(continueButtonShipping.isDisplayed());
+    public CheckoutOrder pressContinueShippingAddress() {
         continueButtonShipping.click();
         return this;
     }
 
-    public Checkout_Order pressContinueShippingMethod() throws InterruptedException {
-        Thread.sleep(1000);
-        Assert.assertTrue(continueButtonShippingMethod.isDisplayed());
+    public CheckoutOrder pressContinueShippingMethod() {
         continueButtonShippingMethod.click();
         return this;
     }
 
-    public Checkout_Order pressContinuePaymentMethod() throws InterruptedException {
-        Thread.sleep(1000);
-        Assert.assertTrue(continueButtonPaymentMethod.isDisplayed());
+    public CheckoutOrder pressContinuePaymentMethod() {
         continueButtonPaymentMethod.click();
         return this;
     }
 
-    public Checkout_Order pressContinuePaymentInformation() throws InterruptedException {
-        Thread.sleep(1000);
-        Assert.assertTrue(continueButtonPaymentInformation.isDisplayed());
+    public CheckoutOrder pressContinuePaymentInformation() {
         continueButtonPaymentInformation.click();
         return this;
     }
 
-    public Checkout_Order pressConfirm(){
-        Assert.assertTrue(confirmButton.isDisplayed());
+    public CheckoutOrder pressConfirm(){
         confirmButton.click();
-        Assert.assertTrue(orderCompletionSection.isDisplayed());
         return this;
     }
 
-    public Checkout_Order selectShippingMethod(String shippingMethod){
+    public CheckoutOrder selectShippingMethod(String shippingMethod){
         switch (shippingMethod){
             case "Ground":
-                Assert.assertTrue(shippingMethodGround.isDisplayed());
                 shippingMethodGround.click();
                 break;
             case "Next Day Air":
-                Assert.assertTrue(shippingMethod2ndDayAir.isDisplayed());
                 shippingMethodNextDayAir.click();
                 break;
             case "2nd Day Air":
-                Assert.assertTrue(shippingMethod2ndDayAir.isDisplayed());
                 shippingMethod2ndDayAir.click();
                 break;
         }
         return this;
     }
 
-    public Checkout_Order selectPaymentMethod(String paymentMethod){
+    public CheckoutOrder selectPaymentMethod(String paymentMethod){
         switch (paymentMethod){
             case "Cash On Delivery":
-                Assert.assertTrue(paymentMethodCashOnDelivery.isDisplayed());
                 paymentMethodCashOnDelivery.click();
                 break;
             case "Check / Money Order":
-                Assert.assertTrue(paymentMethodCheck.isDisplayed());
                 paymentMethodCheck.click();
                 break;
             case "Credit Card":
-                Assert.assertTrue(paymentMethodCreditCard.isDisplayed());
                 paymentMethodCreditCard.click();
                 break;
             case "Purchase Order":
-                Assert.assertTrue(paymentMethodPurchaseOrder.isDisplayed());
                 paymentMethodPurchaseOrder.click();
                 break;
 
@@ -175,8 +153,7 @@ public class Checkout_Order extends Base{
         String label = driver.findElement(By.xpath("//label[contains(text(), '"+methodForPrice+"')]")).getText();
         int leftBracket = label.indexOf("(");
         int rightBracket = label.indexOf(")");
-        String priceTrimmed = label.substring(leftBracket+1, rightBracket);
-        return Double.parseDouble(priceTrimmed);
+        return Double.parseDouble(label.substring(leftBracket+1, rightBracket));
     }
 
     public double getOrderSubTotalPrice(){
@@ -185,8 +162,7 @@ public class Checkout_Order extends Base{
     }
 
     public double getOrderTotalPrice(){
-        String totalPrice = driver.findElement(By.xpath("//span[@class='product-price order-total']/strong")).getText();
-        return Double.parseDouble(totalPrice);
+        return Double.parseDouble(driver.findElement(By.xpath("//span[@class='product-price order-total']/strong")).getText());
     }
 
 
