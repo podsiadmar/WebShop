@@ -49,9 +49,9 @@ public class Register extends Base{
         return this;
     }
 
-    public Register verifyRegistrationCompletion(String newEmail){
+    public HomePage verifyRegistrationCompletion(String newEmail){
         Assert.assertEquals(registerNotification.getText().trim(), "Your registration completed");
         Assert.assertEquals(accountLink.getText().trim(), newEmail);
-        return this;
+        return new HomePage();
     }
 }

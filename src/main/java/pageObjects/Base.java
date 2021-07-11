@@ -18,6 +18,15 @@ public class Base {
 
         //Initialize PageFactory elements defined in @FindBy annotations
         PageFactory.initElements(driver, this);
+
+    }
+
+    public void turnOffImplicitWaits(){
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+    }
+
+    public void turnOnImplicitWaits() {
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
 }

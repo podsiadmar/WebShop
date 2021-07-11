@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Products extends Base {
-    @FindBy(className = "product-item")
+    @FindBy(css = ".product-item h2 a")
     private List<WebElement> products;
     @FindBy(xpath = "//li[@class='next-page']/a")
     private WebElement nextButton;
@@ -31,7 +31,7 @@ public class Products extends Base {
                     .collect(Collectors.toList());
              if(lookedUpProduct.isEmpty() && nextButton.isDisplayed())
                  nextButton.click();
-             if(lookedUpProduct.isEmpty() && !nextButton.isDisplayed())
+             else if(lookedUpProduct.isEmpty() && !nextButton.isDisplayed())
                  throw new InvalidArgumentException("There is n such product in catalog.");
         } while (lookedUpProduct.isEmpty());
 
@@ -67,9 +67,8 @@ public class Products extends Base {
         return  this;
     }
 
-    public Products clickAddToCart(){
+    public void clickAddToCart(){
         addToCartButton.click();
-        return this;
     }
 
 }

@@ -1,59 +1,42 @@
 package tests;
-
-import org.testng.Assert;
 import org.testng.annotations.Test;
+import pageObjects.HomePage;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 
 public class TestCases extends BaseTest {
 
-    @Test
-    public void loginToShop(){
-        homePage
-                .proceedToLogin();
-        logInLogout
-                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!");
-        homePage
+    @Test(dataProvider = "Login", dataProviderClass = DataProviders.class)
+    public void loginToShop(String login, String password){
+        new HomePage()
+                .proceedToLogin()
+                .logInToApplication(login, password)
                 .logOut();
-
     }
 
-    @Test
-    public void registerNewUser(){
-        homePage
-                .proceedToRegister();
-
-        //Randomize first name, last name and compose email address
-        String fName = faker.name().firstName();
-        String lName = faker.name().lastName();
-        String nMail = fName+"."+lName+"@gmail.test";
-        System.out.println(fName+", "+lName+", "+nMail);
-
-        register
-                .registerNewUser("M", fName, lName, nMail, "Pass1234!", "Pass1234!")
-                .verifyRegistrationCompletion(nMail);
-        homePage
+    @Test(dataProvider = "Registration", dataProviderClass = DataProviders.class)
+    public void registerNewUser(String fName, String lName, String eMail) {
+        new HomePage()
+                .proceedToRegister()
+                .registerNewUser("M", fName, lName, eMail, "Tosca1234!", "Tosca1234!")
+                .verifyRegistrationCompletion(eMail)
                 .logOut();
     }
 
     @Test
     public void verifyProductPrice() {
+        HomePage homePage = new HomePage();
         homePage
-                .proceedToLogin();
-        logInLogout
-                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!");
-        homePage
-                .selectCategory("Apparel & Shoes");
-        int int_random = ThreadLocalRandom.current().nextInt(1, 30);
-        products
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
                 .selectProduct("Wool Hat")
-                .addQuantity(int_random)
+                .addQuantity(12)
                 .selectSize("Large")
                 .clickAddToCart();
         homePage
-                .proceedToShopingCart();
-        shopping_cart
+                .proceedToShopingCart()
                 .verifySubTotalPrice()
                 .removeFirstProduct()
                 .verifyShoppingCartIsEmpty();
@@ -64,38 +47,26 @@ public class TestCases extends BaseTest {
 
     @Test
     public void checkoutProcess() {
+        HomePage homePage = new HomePage();
         homePage
-                .proceedToLogin();
-        logInLogout
-                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!");
-        homePage
-                .selectCategory("Apparel & Shoes");
-        int int_random = ThreadLocalRandom.current().nextInt(1, 30);
-        products
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
                 .selectProduct("Sunglasses")
-                .addQuantity(int_random)
+                .addQuantity(6)
                 .clickAddToCart();
         homePage
-                .proceedToShopingCart();
-        shopping_cart
+                .proceedToShopingCart()
                 .verifySubTotalPrice()
-                .startCheckout();
-        checkout_order
+                .startCheckout()
                 .pressContinueBillingAddress()
                 .pressContinueShippingAddress()
-                .selectShippingMethod("Ground");
-        double shippingMethodPrice = checkout_order.getMethodPrice("Ground");
-        checkout_order
+                .selectGroundShippingMethod()
                 .pressContinueShippingMethod()
-                .selectPaymentMethod("Check / Money Order");
-        double paymentMethodPrice = checkout_order.getMethodPrice("Check / Money Order");
-        checkout_order
+                .selectCheckMoneyOrderPaymentMethod()
                 .pressContinuePaymentMethod()
-                .pressContinuePaymentInformation();
-        double orderSubTotalPrice = checkout_order.getOrderSubTotalPrice();
-        double orderTotalPrice = checkout_order.getOrderTotalPrice();
-        Assert.assertEquals(orderTotalPrice, shippingMethodPrice + paymentMethodPrice + orderSubTotalPrice);
-        checkout_order
+                .pressContinuePaymentInformation()
+                .verifyCartTotalOrder()
                 .pressConfirm();
         homePage
                 .logOut();

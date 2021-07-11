@@ -3,11 +3,14 @@ package pageObjects;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomePage extends Base {
+
 
         //Top Menu Links
         @FindBy(linkText = "Log in")
@@ -28,24 +31,24 @@ public class HomePage extends Base {
 
         public HomePage logOut(){
             logOutLink.click();
-            return this;
+            return new HomePage();
         }
 
-        public HomePage proceedToRegister(){
+        public Register proceedToRegister(){
             registerLink.click();
-            return this;
+            return new Register();
         }
 
-        public HomePage proceedToShopingCart(){
-            //turn off implicityWait
-//            WebDriverWait wait = new WebDriverWait(driver, 10 , 500);
-//            wait.until(ExpectedConditions.elementToBeClickable(shoppingCartLink));
-            //turn on
+        public ShoppingCart proceedToShopingCart(){
+            turnOffImplicitWaits();
+            WebDriverWait wait = new WebDriverWait(driver, 10 , 500);
+            wait.until(ExpectedConditions.elementToBeClickable(shoppingCartLink));
+            turnOnImplicitWaits();
             shoppingCartLink.click();
-            return this;
+            return new ShoppingCart();
         }
 
-        public HomePage selectCategory(String categoryName){
+        public Products selectCategory(String categoryName){
             List<WebElement> temp = categories
                     .stream()
                     .filter(webElement -> webElement.getText().contains(categoryName))
@@ -60,6 +63,6 @@ public class HomePage extends Base {
 
             if(temp.isEmpty()) throw new InvalidArgumentException("Invalid category name.");
             temp.get(0).click();
-            return this;
+            return new Products();
         }
 }

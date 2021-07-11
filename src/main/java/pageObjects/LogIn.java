@@ -12,10 +12,11 @@ public class LogIn extends Base {
     @FindBy(className = "login-button")
     private WebElement loginButton;
 
-    public void logInToApplication(String email, String password){
+    public HomePage logInToApplication(String email, String password){
         emailTextBox.sendKeys(email);
         passwordTextBox.sendKeys(password);
         loginButton.click();
+        return new HomePage();
     }
 
 

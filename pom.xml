@@ -77,5 +77,11 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.34.0</version>
         </dependency>
+        <dependency>
+            <groupId>eu.timepit</groupId>
+            <artifactId>singleton-ops_2.13</artifactId>
+            <version>0.5.2</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

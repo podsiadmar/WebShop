@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -21,39 +22,70 @@ public class CheckoutOrder extends Base{
     private WebElement billingAddressPhoneNumber;
 
     //Shipping Method
-    @FindBy(xpath = "//label[contains(text(), 'Ground')]/preceding-sibling::input")
+    //radio buttons
+    @FindBy(css = "[value=\"Ground___Shipping.FixedRate\"]")
     private WebElement shippingMethodGround;
-    @FindBy(xpath = "//label[contains(text(), 'Next Day Air')]/preceding-sibling::input")
+    @FindBy(xpath = "[value=\"Next Day Air___Shipping.FixedRate\"]")
     private WebElement shippingMethodNextDayAir;
-    @FindBy(xpath = "//label[contains(text(), '2nd Day Air')]/preceding-sibling::input")
+    @FindBy(xpath = "[value=\"2nd Day Air___Shipping.FixedRate\"]")
     private WebElement shippingMethod2ndDayAir;
+    //labels
+    @FindBy(xpath = "//label[contains(text(), 'Ground')]")
+    private WebElement shippingMethodGroundLabel;
+    @FindBy(xpath = "//label[contains(text(), 'Next Day Air')]")
+    private WebElement shippingMethodNextDayAirLabel;
+    @FindBy(xpath = "//label[contains(text(), '2nd Day Air')]")
+    private WebElement shippingMethod2ndDayAirLabel;
+
 
     //Payment method
-    @FindBy(xpath = "//label[contains(text(), 'Cash On Delivery')]/preceding-sibling::input")
+    @FindBy(css = "[value=\"Payments.CashOnDelivery\"]")
     private WebElement paymentMethodCashOnDelivery;
-    @FindBy(xpath = "//label[contains(text(), 'Check')]/preceding-sibling::input")
+    @FindBy(css = "[value=\"Payments.CheckMoneyOrder\"]")
     private WebElement paymentMethodCheck;
-    @FindBy(xpath = "//label[contains(text(), 'Credit Card')]/preceding-sibling::input")
+    @FindBy(css = "[value=\"Payments.Manual\"]")
     private WebElement paymentMethodCreditCard;
-    @FindBy(xpath = "//label[contains(text(), 'Purchase Order')]/preceding-sibling::input")
+    @FindBy(css = "[value=\"Payments.PurchaseOrder\"]")
     private WebElement paymentMethodPurchaseOrder;
+    //labels
+    @FindBy(xpath = "//label[contains(text(), 'Cash On Delivery')]")
+    private WebElement paymentMethodCashOnDeliveryLabel;
+    @FindBy(xpath = "//label[contains(text(), 'Check / Money Order')]")
+    private WebElement paymentMethodCashMoneyOrderLabel;
+    @FindBy(xpath = "//label[contains(text(), 'Credit Card')]")
+    private WebElement paymentMethodCreditCardLabel;
+    @FindBy(xpath = "//label[contains(text(), 'Purchase Order')]")
+    private WebElement paymentMethodPurchaseOrderLabel;
+
 
     //Buttons
-    @FindBy(xpath = "//input[@type='button' and @title='Continue'][@onclick='Billing.save()']")
+    @FindBy(css = "[onclick=\"Billing.save()\"]")
     private WebElement continueButtonBilling;
-    @FindBy(xpath = "//input[@type='button' and @title='Continue'][@onclick='Shipping.save()']")
+    @FindBy(css = "[onclick=\"Shipping.save()\"]")
     private WebElement continueButtonShipping;
-    @FindBy(xpath = "//input[@type='button' and @value='Continue'][@onclick='ShippingMethod.save()']")
+    @FindBy(css = "[onclick=\"ShippingMethod.save()\"]")
     private WebElement continueButtonShippingMethod;
-    @FindBy(xpath = "//input[@type='button' and @value='Continue'][@onclick='PaymentMethod.save()']")
+    @FindBy(css = "[onclick=\"PaymentMethod.save()\"]")
     private WebElement continueButtonPaymentMethod;
-    @FindBy(xpath = "[@onclick='PaymentInfo.save()']")
+    @FindBy(css = "[onclick=\"PaymentInfo.save()\"]")
     private WebElement continueButtonPaymentInformation;
     @FindBy(css = "[value='Confirm']")
     private WebElement confirmButton;
 
+    //CartTotal
+    @FindBy(css = "table.cart-total tr:first-of-type .product-price")
+    private WebElement cartSubTotalPrice;
+    @FindBy(css = "table.cart-total tr:nth-child(2) .product-price")
+    private WebElement cartShippingPrice;
+    @FindBy(css = "table.cart-total tr:nth-child(3) .product-price")
+    private WebElement cartPaymentMethodAdditionalFeePrice;
+    @FindBy(css = "table.cart-total tr:nth-child(4) .product-price")
+    private WebElement cartTaxPrice;
+    @FindBy(css = "table.cart-total tr:last-of-type .product-price")
+    private WebElement cartTotalPrice;
+
     //Order Completed
-    @FindBy(xpath = "//div[@class='section order-completed']")
+    @FindBy(css = ".order-completed")
     private WebElement orderCompletionSection;
 
     //here i tried to create one general xpath to take all continue buttons and put it into list, then i use for to check all buttons
@@ -110,60 +142,109 @@ public class CheckoutOrder extends Base{
         return this;
     }
 
+
     public CheckoutOrder pressConfirm(){
         confirmButton.click();
         return this;
     }
-
-    public CheckoutOrder selectShippingMethod(String shippingMethod){
-        switch (shippingMethod){
-            case "Ground":
-                shippingMethodGround.click();
-                break;
-            case "Next Day Air":
-                shippingMethodNextDayAir.click();
-                break;
-            case "2nd Day Air":
-                shippingMethod2ndDayAir.click();
-                break;
-        }
+//---------------------------------------------------Shipping Methods---------------------------------------------------
+    //Ground
+    public CheckoutOrder selectGroundShippingMethod(){
+        shippingMethodGround.click();
         return this;
     }
 
-    public CheckoutOrder selectPaymentMethod(String paymentMethod){
-        switch (paymentMethod){
-            case "Cash On Delivery":
-                paymentMethodCashOnDelivery.click();
-                break;
-            case "Check / Money Order":
-                paymentMethodCheck.click();
-                break;
-            case "Credit Card":
-                paymentMethodCreditCard.click();
-                break;
-            case "Purchase Order":
-                paymentMethodPurchaseOrder.click();
-                break;
-
-        }
-        return this;
-    }
-
-    public double getMethodPrice(String methodForPrice){
-        String label = driver.findElement(By.xpath("//label[contains(text(), '"+methodForPrice+"')]")).getText();
+    public double getGroundMethodPrice() {
+        String label = shippingMethodGroundLabel.getText();
         int leftBracket = label.indexOf("(");
         int rightBracket = label.indexOf(")");
-        return Double.parseDouble(label.substring(leftBracket+1, rightBracket));
+        return Double.parseDouble(label.substring(leftBracket + 1, rightBracket));
+    }
+    //Next Day Air
+    public CheckoutOrder selectNextDayAirShippingMethod(){
+        shippingMethodNextDayAir.click();
+        return this;
+    }
+
+    public double getNextDayAirMethodPrice() {
+        String label = shippingMethodNextDayAirLabel.getText();
+        int leftBracket = label.indexOf("(");
+        int rightBracket = label.indexOf(")");
+        return Double.parseDouble(label.substring(leftBracket + 1, rightBracket));
+    }
+
+    //2nd Day Air
+    public CheckoutOrder select2ndDayAirShippingMethod(){
+        shippingMethod2ndDayAir.click();
+        return this;
+    }
+
+    public double get2NndDayAirMethodPrice() {
+        String label = shippingMethod2ndDayAir.getText();
+        int leftBracket = label.indexOf("(");
+        int rightBracket = label.indexOf(")");
+        return Double.parseDouble(label.substring(leftBracket + 1, rightBracket));
+    }
+
+//---------------------------------------------------Payment Methods---------------------------------------------------
+//Cash On Delivery
+    public CheckoutOrder selectCashOnDeliveryPaymentMethod(){
+        paymentMethodCashOnDelivery.click();
+        return this;
+    }
+
+    public double getCashOnDeliveryPaymentMethodPrice() {
+        String label = paymentMethodCashOnDeliveryLabel.getText();
+        int leftBracket = label.indexOf("(");
+        int rightBracket = label.indexOf(")");
+        return Double.parseDouble(label.substring(leftBracket + 1, rightBracket));
+    }
+//Check / Money Order
+    public CheckoutOrder selectCheckMoneyOrderPaymentMethod(){
+        paymentMethodCheck.click();
+        return this;
+    }
+
+    public double getCheckMoneyOrderPaymentMethodPrice() {
+        String label = paymentMethodCashMoneyOrderLabel.getText();
+        int leftBracket = label.indexOf("(");
+        int rightBracket = label.indexOf(")");
+        return Double.parseDouble(label.substring(leftBracket + 1, rightBracket));
+    }
+//Credit Card
+    public CheckoutOrder selectCreditCardPaymentMethod(){
+        paymentMethodCreditCard.click();
+        return this;
+    }
+//Purchase Order
+    public CheckoutOrder selectPurchaseOrderPaymentMethod(){
+        paymentMethodPurchaseOrder.click();
+        return this;
     }
 
     public double getOrderSubTotalPrice(){
-        String subTotal = driver.findElement(By.xpath("//span[text()='Sub-Total:']/ancestor::td/following-sibling::td//span[@class='product-price']")).getText();
-        return Double.parseDouble(subTotal);
+        return Double.parseDouble(cartSubTotalPrice.getText());
     }
 
+    public double getOrderShippingPrice(){
+        return Double.parseDouble(cartShippingPrice.getText());
+    }
+
+    public double getOrderPaymentMethodAdditionalFeePrice(){
+        return Double.parseDouble(cartPaymentMethodAdditionalFeePrice.getText());
+    }
+
+    public double getOrderTaxPrice(){
+        return Double.parseDouble(cartTaxPrice.getText());
+    }
     public double getOrderTotalPrice(){
-        return Double.parseDouble(driver.findElement(By.xpath("//span[@class='product-price order-total']/strong")).getText());
+        return Double.parseDouble(cartTotalPrice.getText());
     }
 
+    public CheckoutOrder verifyCartTotalOrder(){
+        Assert.assertEquals(getOrderSubTotalPrice() + getOrderShippingPrice() + getOrderPaymentMethodAdditionalFeePrice()
+        + getOrderTaxPrice(), getOrderTotalPrice());
+        return this;
+    }
 
 }
