@@ -11,7 +11,7 @@ public class DataProviders{
 
     @DataProvider(name = "Login")
     public Object[][] getDataForLogin(){
-        return new Object[][]{{"JN.8i4201@gmail.test", "Tosca1234!"}, {"Shanda.Leannon238@gmail.test", "Tosca1234!"}};
+        return new Object[][]{{"JN.8i4201@gmail.test", "Tosca1234!"}, {"JN.2Nb315@gmail.test", "Tosca1234!"}};
     }
 
     @DataProvider(name = "Registration")

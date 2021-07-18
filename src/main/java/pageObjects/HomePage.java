@@ -21,6 +21,8 @@ public class HomePage extends Base {
         private WebElement registerLink;
         @FindBy(partialLinkText = "Shopping cart")
         private WebElement shoppingCartLink;
+        @FindBy(css = ".header-links .account")
+        private WebElement accountLink;
         @FindBy(css = ".block-category-navigation .list li")
         private List<WebElement> categories;
 
@@ -65,4 +67,10 @@ public class HomePage extends Base {
             temp.get(0).click();
             return new Products();
         }
+
+    public HomePage verifyThatUserHasLoggedIn(){
+    softAssertion.assertTrue(logOutLink.isDisplayed());
+    softAssertion.assertTrue(accountLink.isDisplayed());
+    return this;
+    }
 }
