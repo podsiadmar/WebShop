@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.MyAccount.MyAccountMain;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ public class HomePage extends Base {
         private WebElement shoppingCartLink;
         @FindBy(css = ".header-links .account")
         private WebElement accountLink;
-        @FindBy(css = ".block-category-navigation .list li")
+        @FindBy(css = ".block-category-navigation .list li a")
         private List<WebElement> categories;
 
         public LogIn proceedToLogin(){
@@ -40,6 +41,11 @@ public class HomePage extends Base {
             registerLink.click();
             return new Register();
         }
+
+    public MyAccountMain proceedToMyAccount(){
+        accountLink.click();
+        return new MyAccountMain();
+    }
 
         public ShoppingCart proceedToShopingCart(){
             turnOffImplicitWaits();

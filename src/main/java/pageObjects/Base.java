@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
     protected WebDriver driver;
-    SoftAssert softAssertion= new SoftAssert();
+    public SoftAssert softAssertion = new SoftAssert();
 
     public Base() {
         //Set driver, check path and chrome version

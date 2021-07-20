@@ -7,23 +7,6 @@ import java.util.Random;
 
 public class TestCases extends BaseTest {
 
-    @Test(dataProvider = "Login", dataProviderClass = DataProviders.class)
-    public void loginToShop(String login, String password){
-        new HomePage()
-                .proceedToLogin()
-                .logInToApplication(login, password)
-                .logOut();
-    }
-
-    @Test(dataProvider = "Registration", dataProviderClass = DataProviders.class)
-    public void registerNewUser(String fName, String lName, String eMail) {
-        new HomePage()
-                .proceedToRegister()
-                .registerNewUser("M", fName, lName, eMail, "Tosca1234!", "Tosca1234!")
-                .verifyRegistrationCompletion(eMail)
-                .logOut();
-    }
-
     @Test
     public void verifyProductPrice() {
         HomePage homePage = new HomePage();
