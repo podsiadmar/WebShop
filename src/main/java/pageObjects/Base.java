@@ -16,6 +16,7 @@ public class Base {
     protected WebDriver driver;
     public SoftAssert softAssertion = new SoftAssert();
 
+
     public Base() {
         //Set driver, check path and chrome version
         this.driver = WebDriverProvider.getInstance();
@@ -24,8 +25,8 @@ public class Base {
         PageFactory.initElements(driver, this);
 
 
-
     }
+
 
     public void turnOffImplicitWaits(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -33,6 +34,12 @@ public class Base {
 
     public void turnOnImplicitWaits() {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    public void changeTimeouts(int timeout){
+        driver.manage().timeouts()
+                .pageLoadTimeout(timeout, TimeUnit.SECONDS)
+                .setScriptTimeout(timeout, TimeUnit.SECONDS);
     }
 
 

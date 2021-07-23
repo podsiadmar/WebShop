@@ -2,6 +2,7 @@ package pageObjects.MyAccount;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import pageObjects.Base;
 
@@ -61,8 +62,9 @@ public class AddNewAddress extends Base {
         return this;
     }
 
-    public void clickSaveButton(){
+    public <T> T clickSaveButton(Class<T> expectedPage){
         saveButton.click();
+        return PageFactory.initElements(driver, expectedPage);
     }
 
 

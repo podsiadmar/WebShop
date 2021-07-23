@@ -14,8 +14,7 @@ public class LoginScenario extends BaseTest {
         new HomePage()
                 .proceedToLogin()
                 .logInToApplication(login, password)
-                .verifyThatUserHasLoggedIn();
-        new HomePage()
+                .verifyThatUserHasLoggedIn()
                 .logOut();
     }
 

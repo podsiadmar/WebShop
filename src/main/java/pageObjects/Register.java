@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 
 public class Register extends Base{
@@ -69,6 +70,11 @@ public class Register extends Base{
 
     public void clickRegisterButton(){
         registerButton.click();
+    }
+
+    public <T> T clickRegisterButton(Class<T> expectedPage){
+        registerButton.click();
+        return PageFactory.initElements(driver, expectedPage);
     }
 
     public Register verifyFirstNameErrorMessage(){

@@ -11,8 +11,7 @@ public class RegistrationScenario extends BaseTest{
         new HomePage()
                 .proceedToRegister()
                 .registerNewUser("M", fName, lName, eMail, "Tosca1234!", "Tosca1234!")
-                .clickRegisterButton();
-        new Register()
+                .clickRegisterButton(Register.class)
                 .verifyRegistrationCompletion(eMail)
                 .logOut();
     }
@@ -21,8 +20,7 @@ public class RegistrationScenario extends BaseTest{
     public void verifyRegistrationErrors(){
         new HomePage()
                 .proceedToRegister()
-                .clickRegisterButton();
-        new Register()
+                .clickRegisterButton(Register.class)
                 .verifyEmailErrorMessage()
                 .verifyFirstNameErrorMessage()
                 .verifyLastNameErrorMessage()
