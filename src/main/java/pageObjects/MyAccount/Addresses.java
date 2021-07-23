@@ -25,9 +25,9 @@ public class Addresses extends Base {
     @FindBy(css = "[value=Delete]")
     private List<WebElement> deleteButtons;
 
-    public AddNewAddress clickAddNewButton(){
+    public AddNewAddress<Addresses> clickAddNewButton(){
         addNewButton.click();
-        return new AddNewAddress();
+        return new AddNewAddress<>(this);
     }
 
     public Addresses verifyNewlyCreatedAddress(String firstName, String lastName, String email, String company, String country,

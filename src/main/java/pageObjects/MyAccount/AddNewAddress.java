@@ -6,7 +6,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import pageObjects.Base;
 
-public class AddNewAddress extends Base {
+public class AddNewAddress<T extends Base> extends Base {
+
+    private T previousPage;
 
     @FindBy(id = "Address_FirstName")
     private WebElement firstNameTextBox;
@@ -35,11 +37,13 @@ public class AddNewAddress extends Base {
     @FindBy(css = ".save-address-button")
     private WebElement saveButton;
 
-    public AddNewAddress() {
+    public AddNewAddress(T previousPage) {
+        super();
+        this.previousPage = previousPage;
     }
 
 
-    public AddNewAddress fillNewAddressFormula(String firstName, String lastName, String email, String company, String country,
+    public AddNewAddress<T> fillNewAddressFormula(String firstName, String lastName, String email, String company, String country,
                                                String city, String address1, String address2, String postalCode, String phoneNumber,
                                                String province, String faxNumber){
         firstNameTextBox.sendKeys(firstName);
@@ -62,9 +66,9 @@ public class AddNewAddress extends Base {
         return this;
     }
 
-    public <T> T clickSaveButton(Class<T> expectedPage){
+    public T clickSaveButton(){
         saveButton.click();
-        return PageFactory.initElements(driver, expectedPage);
+        return previousPage;
     }
 
 

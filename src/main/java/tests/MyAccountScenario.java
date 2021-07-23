@@ -24,7 +24,7 @@ public class MyAccountScenario extends BaseTest {
                 .clickAddNewButton()
                 .fillNewAddressFormula(fname, lname, email, company, "Germany", city, address1, address2 ,zipCode
                         , phoneNumber, "Other (Non US)", faxNumber)
-                .clickSaveButton(Addresses.class)
+                .clickSaveButton()
                 .verifyNewlyCreatedAddress(fname, lname, email, company, "Germany", city, address1, address2,
                         zipCode, phoneNumber, faxNumber)
                 .verifyAddressBlocksCount();
