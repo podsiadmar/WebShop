@@ -1,4 +1,4 @@
-package tests;
+package generators;
 
 import com.github.javafaker.Faker;
 import org.testng.annotations.DataProvider;
@@ -24,19 +24,9 @@ public class DataProviders{
     }
 
     @DataProvider(name = "NewAddress")
-    public Object[] getDataFroNewAddress(){
-        Random rnd = new Random();
-        int bound = 300;
-        String fname = faker.name().firstName();
-        String lname = faker.name().lastName();
-        String company = faker.company().name();
-        String city = faker.beer().name();
-        String address1 = faker.address().streetAddress();
-        String address2 = faker.address().secondaryAddress();
-        String zipCode = faker.address().zipCode();
-        String phoneNumber = faker.phoneNumber().phoneNumber();
-        String faxNumber = faker.number().digits(4);
-        return new Object[][]{{fname, lname, fname+"."+lname+ rnd.nextInt(bound) +"@gmail.test", company, city, address1, address2, zipCode, phoneNumber, faxNumber}};
+    public Object[] getDataFromNewAddress(){
+        new AddressGenerator();
+        return AddressGenerator.newAddress();
     }
 
 

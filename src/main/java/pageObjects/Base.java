@@ -1,5 +1,6 @@
 package pageObjects;
 
+import com.github.javafaker.Faker;
 import configuration.WebDriverProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Base {
     protected WebDriver driver;
-    public SoftAssert softAssertion = new SoftAssert();
+    protected SoftAssert softAssertion = new SoftAssert();
+    protected Faker faker;
 
 
     public Base() {
@@ -23,7 +25,6 @@ public class Base {
 
         //Initialize PageFactory elements defined in @FindBy annotations
         PageFactory.initElements(driver, this);
-
 
     }
 

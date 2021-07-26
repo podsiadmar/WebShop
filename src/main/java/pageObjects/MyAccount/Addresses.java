@@ -3,14 +3,10 @@ package pageObjects.MyAccount;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pageObjects.Base;
-
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class Addresses extends Base {
-    Container container = new Container();
     private static Integer blockOfAddressesCount;
 
     @FindBy(css = ".add-address-button")
@@ -24,6 +20,7 @@ public class Addresses extends Base {
 
     @FindBy(css = "[value=Delete]")
     private List<WebElement> deleteButtons;
+
 
     public AddNewAddress<Addresses> clickAddNewButton(){
         addNewButton.click();

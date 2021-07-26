@@ -1,9 +1,11 @@
 package tests;
 
+import generators.DataProviders;
 import org.testng.annotations.Test;
-import pageObjects.Base;
 import pageObjects.HomePage;
 import pageObjects.LogIn;
+
+import java.io.IOException;
 
 public class LoginScenario extends BaseTest {
     String wrongUser = "WrongLogin@login.com";
@@ -38,10 +40,10 @@ public class LoginScenario extends BaseTest {
     }
 
     @Test
-    public void loginWithWrongPassword(){
+    public void loginWithWrongPassword() throws IOException {
         new HomePage()
                 .proceedToLogin()
-                .logInToApplication("JN.8i4201@gmail.test", wrongUser);
+                .logInToApplication(vault.getDataValue("login"), wrongUser);
         new LogIn()
                 .verifyLoginValidationError()
                 .verifyThatUserProvidesWrongCredentials();

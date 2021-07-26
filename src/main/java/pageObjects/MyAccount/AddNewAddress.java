@@ -1,10 +1,15 @@
 package pageObjects.MyAccount;
 
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import pageObjects.Base;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddNewAddress<T extends Base> extends Base {
 
@@ -69,6 +74,17 @@ public class AddNewAddress<T extends Base> extends Base {
     public T clickSaveButton(){
         saveButton.click();
         return previousPage;
+    }
+
+    public void selectRandomCountry(){
+        Select drpCountry = new Select(countryId);
+        List<WebElement> countries = drpCountry.getOptions();
+        int min = 0;
+        int max = countries.size()-1;
+        int random_int = (int)Math.floor(Math.random()*(max-min+1)+min);
+        System.out.println(drpCountry.getOptions().get(random_int).getText());
+
+
     }
 
 
