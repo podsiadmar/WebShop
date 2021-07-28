@@ -1,14 +1,17 @@
 package pageObjects;
 
-import jdk.jpackage.internal.Log;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import pageObjects.MyAccount.MyAccountMain;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class HomePage extends Base {
+
 
         //Top Menu Links
         @FindBy(linkText = "Log in")
@@ -19,7 +22,9 @@ public class HomePage extends Base {
         private WebElement registerLink;
         @FindBy(partialLinkText = "Shopping cart")
         private WebElement shoppingCartLink;
-        @FindBy(css = ".block-category-navigation .list li")
+        @FindBy(css = ".header-links .account")
+        private WebElement accountLink;
+        @FindBy(css = ".block-category-navigation .list li a")
         private List<WebElement> categories;
 
         public LogIn proceedToLogin(){
@@ -29,24 +34,29 @@ public class HomePage extends Base {
 
         public HomePage logOut(){
             logOutLink.click();
-            return this;
+            return new HomePage();
         }
 
-        public HomePage proceedToRegister(){
+        public Register proceedToRegister(){
             registerLink.click();
-            return this;
+            return new Register();
         }
 
-        public HomePage proceedToShopingCart(){
-            //turn off implicityWait
-//            WebDriverWait wait = new WebDriverWait(driver, 10 , 500);
-//            wait.until(ExpectedConditions.elementToBeClickable(shoppingCartLink));
-            //turn on
+    public MyAccountMain proceedToMyAccount(){
+        accountLink.click();
+        return new MyAccountMain();
+    }
+
+        public ShoppingCart proceedToShopingCart(){
+            turnOffImplicitWaits();
+            WebDriverWait wait = new WebDriverWait(driver, 10 , 500);
+            wait.until(ExpectedConditions.elementToBeClickable(shoppingCartLink));
+            turnOnImplicitWaits();
             shoppingCartLink.click();
-            return this;
+            return new ShoppingCart();
         }
 
-        public HomePage selectCategory(String categoryName){
+        public Products selectCategory(String categoryName){
             List<WebElement> temp = categories
                     .stream()
                     .filter(webElement -> webElement.getText().contains(categoryName))
@@ -61,6 +71,12 @@ public class HomePage extends Base {
 
             if(temp.isEmpty()) throw new InvalidArgumentException("Invalid category name.");
             temp.get(0).click();
-            return this;
+            return new Products();
         }
+
+    public HomePage verifyThatUserHasLoggedIn(){
+    softAssertion.assertTrue(logOutLink.isDisplayed());
+    softAssertion.assertTrue(accountLink.isDisplayed());
+    return this;
+    }
 }
