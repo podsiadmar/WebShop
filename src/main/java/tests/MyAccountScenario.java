@@ -17,10 +17,11 @@ public class MyAccountScenario extends BaseTest {
     @Test(dataProvider = "NewAddress", dataProviderClass = DataProviders.class)
     public void proceedToMyAccount(String fname, String lname, String email, String company, String country, String province,
                                    String city, String address1, String address2, String zipCode, String phoneNumber,
-                                   String faxNumber) throws IOException {
+                                   String faxNumber) {
         new HomePage()
                 .proceedToLogin()
-                .logInToApplication(vault.getDataValue("login"), vault.getDataValue("password"))
+//                .logInToApplication(vault.getDataValue("login"), vault.getDataValue("password"))
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
                 .proceedToMyAccount()
                 .selectFromLeftList("Addresses", Addresses.class)
                 .takeCountOfAllAddresses()
@@ -33,12 +34,12 @@ public class MyAccountScenario extends BaseTest {
                 .verifyAddressBlocksCount();
 
     }
-
     @Test
-    public void removeRandomAddress() throws IOException {
+    public void removeRandomAddress() {
         new HomePage()
                 .proceedToLogin()
-                .logInToApplication(vault.getDataValue("login"), vault.getDataValue("password"))
+//                .logInToApplication(vault.getDataValue("login"), vault.getDataValue("password"))
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
                 .proceedToMyAccount()
                 .selectFromLeftList("Addresses", Addresses.class)
                 .takeCountOfAllAddresses()

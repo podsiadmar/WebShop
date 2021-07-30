@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 public class Vault extends Base {
 
     public String getDataValue(String dataName) throws IOException {
-        String commandLine = "curl -H \"X-Vault-Token: s.sldG1UX21ThpU6S4Ee0APWdx\" -X GET http://127.0.0.1:8200/v1/secret/data/demoWebShop";
+        String commandLine = "curl -H \"X-Vault-Token: s.YOyRy2eUKo83Jku2Mr5Mo4UH\" -X GET http://127.0.0.1:8200/v1/secret/data/demoWebShop";
         Reader reader = new InputStreamReader(Runtime.getRuntime().exec(commandLine).getInputStream());
         JsonElement element = new JsonParser().parse(reader);
         JsonObject jsonObject = element.getAsJsonObject();

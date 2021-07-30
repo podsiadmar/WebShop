@@ -28,7 +28,6 @@ public class Base {
 
     }
 
-
     public void turnOffImplicitWaits(){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
     }
