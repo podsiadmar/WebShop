@@ -1,7 +1,10 @@
 package pageObjects.MyAccount;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pageObjects.Base;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +23,6 @@ public class Addresses extends Base {
 
     @FindBy(css = "[value=Delete]")
     private List<WebElement> deleteButtons;
-
 
     public AddNewAddress<Addresses> clickAddNewButton(){
         addNewButton.click();
@@ -62,6 +64,7 @@ public class Addresses extends Base {
         List<WebElement> blocks = addressBlock;
         Integer newCount = blocks.size();
         softAssertion.assertNotEquals(blockOfAddressesCount, newCount);
+        //waitDriver.until(ExpectedConditions.refreshed(ExpectedConditions.numberOfElementsToBeLessThan(By.cssSelector("[value=Delete]"), newCount)));
         softAssertion.assertTrue(blockOfAddressesCount-1==newCount);
         softAssertion.assertAll();
     }

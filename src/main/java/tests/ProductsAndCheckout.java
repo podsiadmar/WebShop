@@ -1,11 +1,13 @@
 package tests;
+import generators.DataProviders;
 import org.testng.annotations.Test;
 import pageObjects.HomePage;
+import pageObjects.Products;
 
 import java.util.Random;
 
 
-public class TestCases extends BaseTest {
+public class ProductsAndCheckout extends BaseTest {
 
     @Test
     public void verifyProductPrice() {
@@ -53,6 +55,20 @@ public class TestCases extends BaseTest {
                 .pressConfirm();
         homePage
                 .logOut();
+    }
+
+    @Test(dataProvider = "amountsPerPage", dataProviderClass = DataProviders.class)
+    public void checkProductAmountPerPage(Integer pageAmount){
+        HomePage homePage = new HomePage();
+        Products products = new Products();
+        homePage
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
+                .selectDisplayPerPageAmount(pageAmount)
+                .getCountOfVisibleProducts();
+        products
+                .verifyProductAmmount(pageAmount);
     }
 
 

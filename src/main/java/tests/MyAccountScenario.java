@@ -3,6 +3,7 @@ package tests;
 import generators.AddressGenerator;
 import generators.DataProviders;
 import org.testng.annotations.Test;
+import pageObjects.Base;
 import pageObjects.ChromePopUps;
 import pageObjects.HomePage;
 import pageObjects.MyAccount.Addresses;
@@ -15,9 +16,9 @@ public class MyAccountScenario extends BaseTest {
     private Object Addresses;
 
     @Test(dataProvider = "NewAddress", dataProviderClass = DataProviders.class)
-    public void proceedToMyAccount(String fname, String lname, String email, String company, String country, String province,
-                                   String city, String address1, String address2, String zipCode, String phoneNumber,
-                                   String faxNumber) {
+    public void addNewAddress(String fname, String lname, String email, String company, String country, String province,
+                              String city, String address1, String address2, String zipCode, String phoneNumber,
+                              String faxNumber) {
         new HomePage()
                 .proceedToLogin()
 //                .logInToApplication(vault.getDataValue("login"), vault.getDataValue("password"))

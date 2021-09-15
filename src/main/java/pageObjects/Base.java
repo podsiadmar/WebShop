@@ -16,8 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class Base {
     protected WebDriver driver;
     protected SoftAssert softAssertion = new SoftAssert();
-    protected Faker faker;
-
+    protected WebDriverWait waitDriver;
 
     public Base() {
         //Set driver, check path and chrome version
@@ -26,6 +25,7 @@ public class Base {
         //Initialize PageFactory elements defined in @FindBy annotations
         PageFactory.initElements(driver, this);
 
+        waitDriver = new WebDriverWait(driver,15);
     }
 
     public void turnOffImplicitWaits(){

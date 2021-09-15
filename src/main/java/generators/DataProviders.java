@@ -29,5 +29,11 @@ public class DataProviders{
         return AddressGenerator.newAddress();
     }
 
+    @DataProvider(name = "amountsPerPage")
+    public Object[] getDataForAmountPerPageTest() {
+        return new Object[][]{{4}, {8}, {12}};
+    }
+
+
 
 }

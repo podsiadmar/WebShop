@@ -40,10 +40,10 @@ public class LoginScenario extends BaseTest {
     }
 
     @Test
-    public void loginWithWrongPassword() throws IOException {
+    public void loginWithWrongPassword() {
         new HomePage()
                 .proceedToLogin()
-                .logInToApplication(vault.getDataValue("login"), wrongUser);
+                .logInToApplication("JN.8i4201@gmail.test", wrongUser);
         new LogIn()
                 .verifyLoginValidationError()
                 .verifyThatUserProvidesWrongCredentials();
