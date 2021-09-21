@@ -47,7 +47,9 @@ public class ShoppingCart extends Base {
     }
 
     public ShoppingCart verifyShoppingCartIsEmpty(){
+        turnOffImplicitWaits();
         Assert.assertTrue(cartItems.isEmpty());
+        turnOnImplicitWaits();
         return this;
     }
 }

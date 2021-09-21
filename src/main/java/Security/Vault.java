@@ -6,9 +6,9 @@ import com.google.gson.JsonParser;
 import org.testng.annotations.Test;
 import pageObjects.Base;
 
-import java.io.*;
-
-import static io.restassured.RestAssured.given;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class Vault extends Base {
 

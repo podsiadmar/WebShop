@@ -6,6 +6,7 @@
             <class name="tests.LoginScenario"/>
             <class name="tests.RegistrationScenario"/>
             <class name="tests.MyAccountScenario"/>
+            <class name="tests.ProductsAndCheckout"/>
         </classes>
     </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -71,6 +71,34 @@ public class ProductsAndCheckout extends BaseTest {
                 .verifyProductAmmount(pageAmount);
     }
 
+    @Test
+    public void verifyPriceSortingLowToHigh(){
+        HomePage homePage = new HomePage();
+        homePage
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
+                .selectProductSort("Price: Low to High")
+                .verifyPriceSortingLowToHigh();
+        homePage
+                .logOut();
+
+    }
+
+    @Test
+    public void verifyPriceSortingHighToLow(){
+        HomePage homePage = new HomePage();
+        homePage
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
+                .selectProductSort("Price: High to Low")
+                .verifyPriceSortingHighToLow();
+        homePage
+                .logOut();
+
+    }
+
 
 }
 

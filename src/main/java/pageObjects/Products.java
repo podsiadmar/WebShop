@@ -12,10 +12,11 @@ import java.util.stream.Collectors;
 
 public class Products extends Base {
     static Integer productsAmount;
+    static String alphabet = "0123456789abcdefghijklmnopqrstuwxyz";
 
     @FindBy(css = ".product-item h2 a")
     private List<WebElement> products;
-    @FindBy(xpath = "//li[@class='next-page']/a")
+    @FindBy(css = "li[class=next-page] a")
     private WebElement nextButton;
     @FindBy(xpath = "//input[contains(@name, 'addtocart_')]")
     private WebElement quantityInput;
@@ -23,12 +24,16 @@ public class Products extends Base {
     private WebElement sizeList;
     @FindBy(xpath = "//input[contains(@id, 'add-to-cart-button')]")
     private WebElement addToCartButton;
-    @FindBy(css = "[id=products-orderby]")
+    @FindBy(css = "#products-orderby")
     private WebElement sortByList;
-    @FindBy(css = "[id=products-pagesize]")
+    @FindBy(css = "#products-pagesize")
     private WebElement displayPerPageList;
     @FindBy(css = ".item-box")
     private List<WebElement> productsOnGrid;
+    @FindBy(css = ".price")
+    private List<WebElement> visiblePrices;
+    @FindBy(css = ".product-title a")
+    private List<WebElement> visibleProductTitles;
 
     //this method finds the product on the list, if it not exist, it will click next button
     public Products selectProduct(String productName){
@@ -77,7 +82,6 @@ public class Products extends Base {
     }
 
     public Products selectDisplayPerPageAmount(Integer amountPerPage){
-        softAssertion.assertTrue(displayPerPageList.isEnabled());
         Select drpAmountPerPage = new Select(displayPerPageList);
         drpAmountPerPage.selectByVisibleText(amountPerPage.toString());
         softAssertion.assertEquals(drpAmountPerPage.getFirstSelectedOption().getText(), amountPerPage.toString());
@@ -86,7 +90,6 @@ public class Products extends Base {
     }
 
     public Products selectProductSort(String sortBy){
-        softAssertion.assertTrue(sortByList.isEnabled());
         Select drpSortBy = new Select(sortByList);
         drpSortBy.selectByVisibleText(sortBy);
         softAssertion.assertEquals(drpSortBy.getFirstSelectedOption().getText(), sortBy);
@@ -101,6 +104,49 @@ public class Products extends Base {
 
     public void verifyProductAmmount(Integer expectedProductAcmount){
         Assert.assertEquals(expectedProductAcmount, getCountOfVisibleProducts());
+    }
+
+    public void verifyPriceSortingLowToHigh(){
+        List<WebElement> productPrices = visiblePrices;
+        do {
+            for(int i=0; i<productPrices.size()-1; i++){
+                softAssertion.assertTrue(Double.parseDouble(visiblePrices.get(i).getText())<=Double.parseDouble(visiblePrices.get(i+1).getText()));
+            }
+            try {
+                turnOffImplicitWaits();
+                nextButton.isDisplayed();
+                nextButton.click();
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                turnOnImplicitWaits();
+                break;
+            }
+        }
+        while (productPrices.size()>0);
+        softAssertion.assertAll();
+    }
+
+    public void verifyPriceSortingHighToLow(){
+        List<WebElement> productPrices = visiblePrices;
+        do {
+            for(int i=0; i<productPrices.size()-1; i++){
+                softAssertion.assertTrue(Double.parseDouble(visiblePrices.get(i).getText())>=Double.parseDouble(visiblePrices.get(i+1).getText()));
+            }
+            try {
+                turnOffImplicitWaits();
+                nextButton.isDisplayed();
+                nextButton.click();
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                turnOnImplicitWaits();
+                break;
+            }
+        }
+        while (productPrices.size()>0);
+        softAssertion.assertAll();
+    }
+
+    public void verifyProductAlphabeticalSort(){
+        List<WebElement> productTitle = visibleProductTitles;
+        char first = productTitle.get(0).toString().charAt(0);
     }
 
 

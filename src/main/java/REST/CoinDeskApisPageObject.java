@@ -1,13 +1,10 @@
 package REST;
 
 import jline.internal.Log;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
