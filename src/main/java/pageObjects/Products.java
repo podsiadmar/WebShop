@@ -4,6 +4,8 @@ import jline.internal.Log;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -12,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class Products extends Base {
     static Integer productsAmount;
-    static String alphabet = "0123456789abcdefghijklmnopqrstuwxyz";
+    static String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     @FindBy(css = ".product-item h2 a")
     private List<WebElement> products;
@@ -30,7 +32,7 @@ public class Products extends Base {
     private WebElement displayPerPageList;
     @FindBy(css = ".item-box")
     private List<WebElement> productsOnGrid;
-    @FindBy(css = ".price")
+    @FindBy(css = ".actual-price")
     private List<WebElement> visiblePrices;
     @FindBy(css = ".product-title a")
     private List<WebElement> visibleProductTitles;
@@ -84,16 +86,14 @@ public class Products extends Base {
     public Products selectDisplayPerPageAmount(Integer amountPerPage){
         Select drpAmountPerPage = new Select(displayPerPageList);
         drpAmountPerPage.selectByVisibleText(amountPerPage.toString());
-        softAssertion.assertEquals(drpAmountPerPage.getFirstSelectedOption().getText(), amountPerPage.toString());
-        softAssertion.assertAll();
+        Assert.assertEquals(drpAmountPerPage.getFirstSelectedOption().getText(), amountPerPage.toString());
     return this;
     }
 
     public Products selectProductSort(String sortBy){
         Select drpSortBy = new Select(sortByList);
         drpSortBy.selectByVisibleText(sortBy);
-        softAssertion.assertEquals(drpSortBy.getFirstSelectedOption().getText(), sortBy);
-        softAssertion.assertAll();
+        Assert.assertEquals(drpSortBy.getFirstSelectedOption().getText(), sortBy);
         return this;
     }
 
@@ -110,7 +110,8 @@ public class Products extends Base {
         List<WebElement> productPrices = visiblePrices;
         do {
             for(int i=0; i<productPrices.size()-1; i++){
-                softAssertion.assertTrue(Double.parseDouble(visiblePrices.get(i).getText())<=Double.parseDouble(visiblePrices.get(i+1).getText()));
+                softAssertion.assertTrue(Double.parseDouble(visiblePrices.get(i).getText())
+                        <=Double.parseDouble(visiblePrices.get(i+1).getText()));
             }
             try {
                 turnOffImplicitWaits();
@@ -126,10 +127,11 @@ public class Products extends Base {
     }
 
     public void verifyPriceSortingHighToLow(){
-        List<WebElement> productPrices = visiblePrices;
+        List<WebElement> productPrices = this.visiblePrices;
         do {
             for(int i=0; i<productPrices.size()-1; i++){
-                softAssertion.assertTrue(Double.parseDouble(visiblePrices.get(i).getText())>=Double.parseDouble(visiblePrices.get(i+1).getText()));
+                softAssertion.assertTrue(Double.parseDouble(productPrices.get(i).getText())
+                        >=Double.parseDouble(productPrices.get(i+1).getText()));
             }
             try {
                 turnOffImplicitWaits();
@@ -144,9 +146,44 @@ public class Products extends Base {
         softAssertion.assertAll();
     }
 
-    public void verifyProductAlphabeticalSort(){
+    public void verifyProductAlphabeticalSortFrom0ToZ(){
         List<WebElement> productTitle = visibleProductTitles;
-        char first = productTitle.get(0).toString().charAt(0);
+
+        do {
+            for(int i=0; i<productTitle.size()-1; i++){
+                softAssertion.assertTrue(alphabet.indexOf(productTitle.get(i).getText().charAt(0))
+                        <=alphabet.indexOf(productTitle.get(i+1).getText().charAt(0)));
+            }
+            try {
+                turnOffImplicitWaits();
+                nextButton.isDisplayed();
+                nextButton.click();
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                break;
+            }
+        }
+        while (productTitle.size()>0);
+        turnOnImplicitWaits();
+    }
+
+    public void verifyProductAlphabeticalSortFromZTo0(){
+        List<WebElement> productTitle = visibleProductTitles;
+
+        do {
+            for(int i=0; i<productTitle.size()-1; i++){
+                softAssertion.assertTrue(alphabet.indexOf(productTitle.get(i).getText().charAt(0))
+                        >=alphabet.indexOf(productTitle.get(i+1).getText().charAt(0)));
+            }
+            try {
+                turnOffImplicitWaits();
+                nextButton.isDisplayed();
+                nextButton.click();
+            } catch (org.openqa.selenium.NoSuchElementException e) {
+                break;
+            }
+        }
+        while (productTitle.size()>0);
+        turnOnImplicitWaits();
     }
 
 

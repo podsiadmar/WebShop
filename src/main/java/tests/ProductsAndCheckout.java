@@ -99,6 +99,34 @@ public class ProductsAndCheckout extends BaseTest {
 
     }
 
+    @Test
+    public void verifyAlphabeticalSortingFrom0ToZ(){
+        HomePage homePage = new HomePage();
+        homePage
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
+                .selectDisplayPerPageAmount(4)
+                .selectProductSort("Name: A to Z")
+                .verifyProductAlphabeticalSortFrom0ToZ();
+        homePage
+                .logOut();
+    }
+
+    @Test
+    public void verifyAlphabeticalSortingFromZTo0(){
+        HomePage homePage = new HomePage();
+        homePage
+                .proceedToLogin()
+                .logInToApplication("JN.8i4201@gmail.test", "Tosca1234!")
+                .selectCategory("Apparel & Shoes")
+                .selectDisplayPerPageAmount(4)
+                .selectProductSort("Name: Z to A")
+                .verifyProductAlphabeticalSortFrom0ToZ();
+        homePage
+                .logOut();
+    }
+
 
 }
 
