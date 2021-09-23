@@ -23,7 +23,7 @@ public class Vault extends Base {
     }
 
     @Test
-    public void dejMniePanResponse() throws IOException {
+    public void retrieveLogin() throws IOException {
         getDataValue("login");
     }
 

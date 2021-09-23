@@ -77,6 +77,7 @@ public class HomePage extends Base {
     public HomePage verifyThatUserHasLoggedIn(){
     softAssertion.assertTrue(logOutLink.isDisplayed());
     softAssertion.assertTrue(accountLink.isDisplayed());
+    softAssertion.assertAll();
     return this;
     }
 }

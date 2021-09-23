@@ -1,4 +1,6 @@
 package REST;
+import org.testng.annotations.Test;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import static io.restassured.RestAssured.given;
@@ -9,11 +11,13 @@ public class guru99ApiPageObject {
     static String url = "http://demo.guru99.com/V4/sinkministatement.php";
 
     //get whole response body
+    @Test
     public void getResponse(){
         given().when().get("http://demo.guru99.com/V4/sinkministatement.php?CUSTOMER_ID=68195&PASSWORD=1234!&Account_No=1").then().log()
                 .all();
 
     }
+
     //get response body
     public void getResponseBody(){
 
