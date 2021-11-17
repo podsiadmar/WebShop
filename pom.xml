@@ -184,6 +184,11 @@
             <version>1.2.5</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.julienrf</groupId>
+            <artifactId>enum_2.13</artifactId>
+            <version>3.1</version>
+        </dependency>
 
     </dependencies>
 </project>

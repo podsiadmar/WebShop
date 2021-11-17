@@ -12,7 +12,7 @@ import static io.restassured.RestAssured.*;
 
 @Slf4j
 public class CoinDeskApisPageObject {
-    static String url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+    static String url = "   ";
     int rspCode = given().when().get(url).getStatusCode();
 
 @Test
